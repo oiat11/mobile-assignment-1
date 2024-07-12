@@ -8,6 +8,7 @@ const Start = () => {
   const [email, setEmail] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [checked, setChecked] = useState(false);
 
   const handleNameBlur = () => {
     if (!isValidName(name)) {
@@ -82,11 +83,11 @@ const Start = () => {
           />
           {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
           <View style={styles.checkboxContainer}>
-            <Checkbox />
+            <Checkbox value={checked} onValueChange={setChecked}/>
             <Text style={styles.checkBoxText}> I am not a robot</Text>
           </View>
           <Button title="RESET" onPress={() => { setName(''); setEmail(''); setNameError(''); setEmailError(''); }} />
-          <Button title="START" onPress={handleStart} />
+          <Button title="START" onPress={handleStart} disabled={!checked}/>
         </View>
       </View>
     </LinearGradient>
