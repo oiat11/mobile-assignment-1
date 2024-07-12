@@ -62,13 +62,15 @@ const Game = () => {
     <LinearGradient colors={["#5ec4ff", "#b0c6d4"]} style={styles.gradient}>
     <View style={styles.container}>
       <Button title="RESTART"/>
-      <View>
-      <Text>Guess a Number Between 1 to 100</Text>
-      <TextInput value={guess} onChangeText={setGuess} keyboardType="numeric"/>
-      <Text>Attempts left: {attempts} </Text>
-      <Text>Timer: {timer}</Text>
-      <Button title="USE A HINT"/>
-      <Button title="SUBMIT GUESS" onPress={handleGuess}/>
+      <View style={styles.cardContainer}>
+      <Text style={styles.message}>Guess a Number Between 1 to 100</Text>
+      <TextInput style={styles.input} value={guess} onChangeText={setGuess} keyboardType="numeric"/>
+      <Text style={styles.textStyle}>Attempts left: {attempts} </Text>
+      <Text style={styles.textStyle}>Timer: {timer}s</Text>
+      <View style={styles.button}>
+      <Button color="blue" style={styles.textStyle} title="USE A HINT"/>
+      <Button color="blue" style={styles.textStyle} title="SUBMIT GUESS" onPress={handleGuess}/>
+        </View>
       </View>
     </View>
     </LinearGradient>
@@ -85,6 +87,35 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+      },
+      cardContainer: {
+        width: "80%",
+        alignItems: "right",
+        backgroundColor: "rgba(128, 128, 128, 0.8)",
+        padding: 20,
+        borderRadius: 10,
+      },
+      message: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#005df2",
+        marginBottom: 10,
+      },
+      input: {
+        height: 40,
+        borderColor: "#6145ff",
+        borderBottomWidth: 3,
+        marginBottom: 10,
+        padding: 10,
+        width: "100%",
+      },
+      textStyle: {
+        padding: 10,
+        alignSelf: "center",
+      },
+      button: {
+        margin: 10,
+        alignSelf: "center",
       },
   });
 
