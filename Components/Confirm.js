@@ -1,7 +1,7 @@
 import { View, Text, Modal, Button, StyleSheet } from "react-native";
 import React from "react";
 
-const Confirm = ({ modalVisible, setModalVisible, name, email }) => {
+const Confirm = ({ modalVisible, setModalVisible, name, email, handleConfirm  }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <View style={styles.modalContainer}>
@@ -14,7 +14,7 @@ const Confirm = ({ modalVisible, setModalVisible, name, email }) => {
           <Button title="Go back" color="red" onPress={() => setModalVisible(false)} />
           </View>
           <View style={styles.buttonWrapper}>
-          <Button title="Continue" color="blue" onPress={() => alert("Submitted!")} />
+          <Button title="Continue" color="blue" onPress={handleConfirm} />
           </View>
           </View>
         </View>

@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
 import { LinearGradient } from "expo-linear-gradient";
 import Confirm from "./Confirm";
+import Game from "./Game";
 
 const Start = () => {
   const [name, setName] = useState("");
@@ -20,6 +21,7 @@ const Start = () => {
   const [emailError, setEmailError] = useState("");
   const [checked, setChecked] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [screen, setScreen] = useState("Start"); 
 
   const handleNameBlur = () => {
     if (!isValidName(name)) {
@@ -71,63 +73,84 @@ const Start = () => {
     }
   };
 
-  return (
-    <LinearGradient colors={["#5ec4ff", "#b0c6d4"]} style={styles.gradient}>
-      <View style={styles.container}>
-        <Text style={styles.welcomeMessage}>Welcome</Text>
-        <View style={styles.formContainer}>
-          <Text style={styles.textStyle}>Name</Text>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-            onBlur={handleNameBlur}
-          />
-          {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
-          <Text style={styles.textStyle}>Email Address</Text>
-          <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-            onBlur={handleEmailBlur}
-            keyboardType="email-address"
-          />
-          {emailError ? (
-            <Text style={styles.errorText}>{emailError}</Text>
-          ) : null}
-          <View style={styles.checkboxContainer}>
-            <Checkbox value={checked} onValueChange={setChecked} />
-            <Text style={styles.checkBoxText}> I am not a robot</Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <View style={styles.buttonWrapper}>
-              <Button
-                title="RESET"
-                color="red"
-                onPress={() => {
-                  setName("");
-                  setEmail("");
-                  setNameError("");
-                  setEmailError("");
-                  setChecked(false);
-                }}
-              />
+  const handleConfirm = () => {
+    setModalVisible(false);
+    setScreen("Game");
+  };
+
+  if (screen === "Start") {
+    return (
+      <LinearGradient colors={["#5ec4ff", "#b0c6d4"]} style={styles.gradient}>
+        <View style={styles.container}>
+          <Text style={styles.welcomeMessage}>Welcome</Text>
+          <View style={styles.formContainer}>
+            <Text style={styles.textStyle}>Name</Text>
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+              onBlur={handleNameBlur}
+            />
+            {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
+            <Text style={styles.textStyle}>Email Address</Text>
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              onBlur={handleEmailBlur}
+              keyboardType="email-address"
+            />
+            {emailError ? (
+              <Text style={styles.errorText}>{emailError}</Text>
+            ) : null}
+            <View style={styles.checkboxContainer}>
+              <Checkbox value={checked} onValueChange={setChecked} />
+              <Text style={styles.checkBoxText}> I am not a robot</Text>
             </View>
-            <View style={styles.buttonWrapper}>
-              <Button
-                title="START"
-                color="red"
-                onPress={handleStart}
-                disabled={!checked}
-              />
+            <View style={styles.buttonContainer}>
+              <View style={styles.buttonWrapper}>
+                <Button
+                  title="RESET"
+                  color="red"
+                  onPress={() => {
+                    setName("");
+                    setEmail("");
+                    setNameError("");
+                    setEmailError("");
+                    setChecked(false);
+                  }}
+                />
+              </View>
+              <View style={styles.buttonWrapper}>
+                <Button
+                  title="START"
+                  color="red"
+                  onPress={handleStart}
+                  disabled={!checked}
+                />
+              </View>
             </View>
           </View>
+          <Confirm
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            name={name}
+            email={email}
+            handleConfirm={handleConfirm}
+          />
         </View>
-        <Confirm modalVisible={modalVisible} setModalVisible={setModalVisible} name={name} email={email}/>
-      </View>
-    </LinearGradient>
-  );
+      </LinearGradient>
+    );
+  }
+
+
+  if (screen === "Game") {
+    return <Game />;
+  }
+
+  return null;
 };
+
 
 const styles = StyleSheet.create({
   gradient: {
