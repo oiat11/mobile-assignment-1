@@ -64,28 +64,26 @@ const Start = () => {
       <View style={styles.container}>
         <Text style={styles.welcomeMessage}>Welcome</Text>
         <View style={styles.formContainer}>
-          <Text>Name</Text>
+          <Text style={styles.textStyle}>Name</Text>
           <TextInput
             style={styles.input}
             value={name}
             onChangeText={setName}
             onBlur={handleNameBlur}
-            placeholder="Enter your name"
           />
           {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
-          <Text>Email Address</Text>
+          <Text style={styles.textStyle}>Email Address</Text>
           <TextInput
             style={styles.input}
             value={email}
             onChangeText={setEmail}
             onBlur={handleEmailBlur}
-            placeholder="Enter your email"
             keyboardType="email-address"
           />
           {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
           <View style={styles.checkboxContainer}>
             <Checkbox />
-            <Text> I am not a robot</Text>
+            <Text style={styles.checkBoxText}> I am not a robot</Text>
           </View>
           <Button title="RESET" onPress={() => { setName(''); setEmail(''); setNameError(''); setEmailError(''); }} />
           <Button title="START" onPress={handleStart} />
@@ -117,18 +115,27 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: "80%",
-    alignItems: "center",
+    alignItems: "right",
     backgroundColor: "rgba(128, 128, 128, 0.8)", 
     padding: 20,
     borderRadius: 10,
   },
   input: {
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderColor: '#6145ff',
+    borderBottomWidth: 3, 
     marginBottom: 10,
     padding: 10,
     width: '100%',
+  },
+  textStyle: {
+    fontWeight: 'bold',
+    color:'#6145ff',
+    fontSize: 16,
+    margin: 10,
+  },
+  checkBoxText: {
+    color: '#6145ff',
   },
   errorText: {
     color: 'red',
