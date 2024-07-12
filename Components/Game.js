@@ -7,10 +7,25 @@ const Game = () => {
     const [randomNumber, setRandomNumber] = useState(null);
     const [guess, setGuess] = useState('');
     const [attempts, setAttempts] = useState(4);
+    const [timer, setTimer] = useState(60);
 
-      useEffect(() => {
-    setRandomNumber(generateRandomNumber());
-  }, []);
+    useEffect(() => {
+        setRandomNumber(generateRandomNumber());
+    
+        const interval = setInterval(() => {
+          setTimer((prevTimer) => {
+            if (prevTimer <= 1) {
+              clearInterval(interval);
+              Alert.alert('Game Over', 'Time is up!');
+              return 0;
+            }
+            return prevTimer - 1;
+          });
+        }, 1000);
+
+        return () => clearInterval(interval);
+      }, []);
+
 
     function generateRandomNumber() {
         const number = Math.floor(Math.random() * 100) + 1;
@@ -51,7 +66,7 @@ const Game = () => {
       <Text>Guess a Number Between 1 to 100</Text>
       <TextInput value={guess} onChangeText={setGuess} keyboardType="numeric"/>
       <Text>Attempts left: {attempts} </Text>
-      <Text>Timer:</Text>
+      <Text>Timer: {timer}</Text>
       <Button title="USE A HINT"/>
       <Button title="SUBMIT GUESS" onPress={handleGuess}/>
       </View>
