@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
 import { LinearGradient } from "expo-linear-gradient";
+import Confirm from "./Confirm";
 
 const Start = () => {
   const [name, setName] = useState("");
