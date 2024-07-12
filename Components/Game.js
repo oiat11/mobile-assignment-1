@@ -4,9 +4,13 @@ import { LinearGradient } from "expo-linear-gradient";
 
 
 const Game = () => {
-    const [randomNumber, setRandomNumber] = useState(generateRandomNumber());
+    const [randomNumber, setRandomNumber] = useState(null);
     const [guess, setGuess] = useState('');
     const [attempts, setAttempts] = useState(4);
+
+      useEffect(() => {
+    setRandomNumber(generateRandomNumber());
+  }, []);
 
     function generateRandomNumber() {
         const number = Math.floor(Math.random() * 100) + 1;
@@ -24,8 +28,18 @@ const Game = () => {
         if (userGuess === randomNumber) {
           Alert.alert('Congratulations!', 'You guessed the correct number.');
         } else {
-          Alert.alert('Wrong Guess', `Try again. The number is ${userGuess < randomNumber ? 'higher' : 'lower'}.`);
+          setAttempts((prevAttempts) => {
+            const newAttempts = prevAttempts - 1;
+            if (newAttempts <= 0) {
+              Alert.alert('Game Over', `You've used all your attempts. The number was ${randomNumber}.`);
+              return 0;
+            } else {
+              Alert.alert('Wrong Guess', `Try again. The number is ${userGuess < randomNumber ? 'higher' : 'lower'}.`);
+              return newAttempts;
+            }
+          });
         }
+        setGuess('');
       }
 
 
@@ -36,7 +50,7 @@ const Game = () => {
       <View>
       <Text>Guess a Number Between 1 to 100</Text>
       <TextInput value={guess} onChangeText={setGuess} keyboardType="numeric"/>
-      <Text>Attempts left:</Text>
+      <Text>Attempts left: {attempts} </Text>
       <Text>Timer:</Text>
       <Button title="USE A HINT"/>
       <Button title="SUBMIT GUESS" onPress={handleGuess}/>
