@@ -8,6 +8,9 @@ const Game = () => {
     const [guess, setGuess] = useState('');
     const [attempts, setAttempts] = useState(4);
     const [timer, setTimer] = useState(60);
+    const [hintUsed, setHintUsed] = useState(false);
+    const [hintRange, setHintRange] = useState(null);
+    
 
     useEffect(() => {
         setRandomNumber(generateRandomNumber());
@@ -57,6 +60,20 @@ const Game = () => {
         setGuess('');
       }
 
+      const handleHint = () => {
+        if (!hintUsed) {
+          setHintUsed(true);
+          const range = generateHintRange(randomNumber);
+          setHintRange(range);
+        }
+      }
+    
+      function generateHintRange(number) {
+        const min = Math.max(1, number - 10);
+        const max = Math.min(100, number + 10);
+        return { min, max };
+      }
+    
 
   return (
     <LinearGradient colors={["#5ec4ff", "#b0c6d4"]} style={styles.gradient}>
@@ -67,9 +84,10 @@ const Game = () => {
       <TextInput style={styles.input} value={guess} onChangeText={setGuess} keyboardType="numeric"/>
       <Text style={styles.textStyle}>Attempts left: {attempts} </Text>
       <Text style={styles.textStyle}>Timer: {timer}s</Text>
-      <View style={styles.button}>
-      <Button color="blue" style={styles.textStyle} title="USE A HINT"/>
-      <Button color="blue" style={styles.textStyle} title="SUBMIT GUESS" onPress={handleGuess}/>
+      {hintRange && <Text>Hint: The number is between {hintRange.min} and {hintRange.max}</Text>}
+      <View style={styles.buttonContainer}>
+      <Button color="blue" title="USE A HINT" onPress={handleHint} disabled={hintUsed}/>
+      <Button color="blue" title="SUBMIT GUESS" onPress={handleGuess}/>
         </View>
       </View>
     </View>
@@ -113,9 +131,10 @@ const styles = StyleSheet.create({
         padding: 10,
         alignSelf: "center",
       },
-      button: {
-        margin: 10,
-        alignSelf: "center",
+      buttonContainer: {
+        marginTop: 10,
+        justifyContent: "space-around",
+        width: "100%",
       },
   });
 
