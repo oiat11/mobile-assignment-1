@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Alert,
   Dimensions,
+  Modal,
 } from "react-native";
 import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
@@ -17,6 +18,7 @@ const Start = () => {
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [checked, setChecked] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleNameBlur = () => {
     if (!isValidName(name)) {
@@ -64,7 +66,7 @@ const Start = () => {
     }
 
     if (valid) {
-      Alert.alert("Success", `Name: ${name}, Email: ${email}`);
+      setModalVisible(true);
     }
   };
 
@@ -120,6 +122,7 @@ const Start = () => {
             </View>
           </View>
         </View>
+        <Confirm modalVisible={modalVisible} setModalVisible={setModalVisible} name={name} email={email}/>
       </View>
     </LinearGradient>
   );
