@@ -1,4 +1,12 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  Dimensions,
+} from "react-native";
 import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
 import { LinearGradient } from "expo-linear-gradient";
@@ -81,13 +89,36 @@ const Start = () => {
             onBlur={handleEmailBlur}
             keyboardType="email-address"
           />
-          {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+          {emailError ? (
+            <Text style={styles.errorText}>{emailError}</Text>
+          ) : null}
           <View style={styles.checkboxContainer}>
-            <Checkbox value={checked} onValueChange={setChecked}/>
+            <Checkbox value={checked} onValueChange={setChecked} />
             <Text style={styles.checkBoxText}> I am not a robot</Text>
           </View>
-          <Button title="RESET" onPress={() => { setName(''); setEmail(''); setNameError(''); setEmailError(''); }} />
-          <Button title="START" onPress={handleStart} disabled={!checked}/>
+          <View style={styles.buttonContainer}>
+            <View style={styles.buttonWrapper}>
+              <Button
+                title="RESET"
+                color="red"
+                onPress={() => {
+                  setName("");
+                  setEmail("");
+                  setNameError("");
+                  setEmailError("");
+                  setChecked(false);
+                }}
+              />
+            </View>
+            <View style={styles.buttonWrapper}>
+              <Button
+                title="START"
+                color="red"
+                onPress={handleStart}
+                disabled={!checked}
+              />
+            </View>
+          </View>
         </View>
       </View>
     </LinearGradient>
@@ -97,11 +128,11 @@ const Start = () => {
 const styles = StyleSheet.create({
   gradient: {
     flex: 1,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
   container: {
-    flex:1,
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -117,35 +148,44 @@ const styles = StyleSheet.create({
   formContainer: {
     width: "80%",
     alignItems: "right",
-    backgroundColor: "rgba(128, 128, 128, 0.8)", 
+    backgroundColor: "rgba(128, 128, 128, 0.8)",
     padding: 20,
     borderRadius: 10,
   },
   input: {
     height: 40,
-    borderColor: '#6145ff',
-    borderBottomWidth: 3, 
+    borderColor: "#6145ff",
+    borderBottomWidth: 3,
     marginBottom: 10,
     padding: 10,
-    width: '100%',
+    width: "100%",
   },
   textStyle: {
-    fontWeight: 'bold',
-    color:'#6145ff',
+    fontWeight: "bold",
+    color: "#6145ff",
     fontSize: 16,
     margin: 10,
   },
   checkBoxText: {
-    color: '#6145ff',
+    color: "#6145ff",
   },
   errorText: {
-    color: 'red',
+    color: "red",
     marginBottom: 10,
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 20,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  buttonWrapper: {
+    flex: 1,
+    margin: 5,
   },
 });
 
