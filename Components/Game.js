@@ -1,7 +1,16 @@
 import { View, Text, TextInput, Button } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+
 
 const Game = () => {
+    const [randomNumber, setRandomNumber] = useState(generateRandomNumber());
+
+    function generateRandomNumber() {
+        const number = Math.floor(Math.random() * 100) + 1;
+        console.log('generateRandomNumber:', number);
+        return number;
+      }
+
   return (
     <View>
       <Button title="RESTART"/>
