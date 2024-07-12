@@ -6,11 +6,17 @@ const Confirm = ({ modalVisible, setModalVisible, name, email }) => {
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <View style={styles.modalContainer}>
         <View style={styles.modalView}>
-          <Text>Hello {name}</Text>
-          <Text>Here is the email you entered: {email}</Text>
-          <Text>If it's not correct, please go back and enter again.</Text>
-          <Button title="Go back" onPress={() => setModalVisible(false)} />
-          <Button title="Continue" onPress={() => alert("Submitted!")} />
+          <Text style={styles.textStyle}>Hello {name}</Text>
+          <Text style={styles.textStyle}>Here is the email you entered: {email}</Text>
+          <Text style={styles.textStyle}>If it's not correct, please go back and enter again.</Text>
+          <View style={styles.buttonContainer}>
+            <View style={styles.buttonWrapper}>
+          <Button title="Go back" color="red" onPress={() => setModalVisible(false)} />
+          </View>
+          <View style={styles.buttonWrapper}>
+          <Button title="Continue" color="blue" onPress={() => alert("Submitted!")} />
+          </View>
+          </View>
         </View>
       </View>
     </Modal>
@@ -39,7 +45,21 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  
+  textStyle:{
+    color: "#4900a3",
+    fontSize: 16,
+    margin: 10,
+    alignSelf: "right",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  buttonWrapper: {
+    flex: 1,
+    margin: 5,
+  },
 });
 
 export default Confirm;
