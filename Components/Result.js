@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, Image } from 'react-native';
+import colors from './colors';
 
 const Result = ({ guess, randomNumber, attempts, onReset, onGuessAgain, onEndGame }) => {
   const isCorrect = guess === randomNumber;
@@ -32,15 +33,23 @@ const Result = ({ guess, randomNumber, attempts, onReset, onGuessAgain, onEndGam
 const styles = StyleSheet.create({
   cardContainer: {
     width: "80%",
-    backgroundColor: "rgba(128, 128, 128, 0.8)",
+    backgroundColor: colors.cardBackground,
     padding: 20,
     borderRadius: 10,
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   message: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#005df2",
+    color: colors.messageColor,
     marginBottom: 10,
   },
   textStyle: {

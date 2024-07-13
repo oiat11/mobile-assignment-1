@@ -1,5 +1,6 @@
 import { View, Text, Modal, Button, StyleSheet } from "react-native";
 import React from "react";
+import colors from "./colors";
 
 const Confirm = ({ modalVisible, setModalVisible, name, email, handleConfirm  }) => {
   return (
@@ -29,6 +30,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   modalView: {
     margin: 20,
@@ -46,7 +55,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   textStyle:{
-    color: "#4900a3",
+    color:colors.modalTextColor,
     fontSize: 16,
     margin: 10,
     alignSelf: "right",

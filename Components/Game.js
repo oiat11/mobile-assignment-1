@@ -1,8 +1,9 @@
-import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import { LinearGradient } from "expo-linear-gradient";
+import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import Result from './Result';
 import GameOver from './GameOver';
+import colors from './colors';
 
 const Game = () => {
   const [randomNumber, setRandomNumber] = useState(null);
@@ -107,7 +108,7 @@ const Game = () => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <LinearGradient colors={["#5ec4ff", "#b0c6d4"]} style={styles.gradient}>
+      <LinearGradient colors={[colors.gradientStart, colors.gradientEnd]} style={styles.gradient}>
         <View style={styles.container}>
         <View style={styles.restartButtonContainer}>
             <Button title="RESTART" onPress={resetGame} />
@@ -137,8 +138,8 @@ const Game = () => {
               <Text style={styles.textStyle}>Timer: {timer}s</Text>
               {hintRange && <Text>Hint: The number is between {hintRange.min} and {hintRange.max}</Text>}
               <View style={styles.buttonContainer}>
-                <Button color="blue" title="USE A HINT" onPress={handleHint} disabled={hintUsed} />
-                <Button color="blue" title="SUBMIT GUESS" onPress={handleGuess} />
+                <Button color={colors.buttonColor} title="USE A HINT" onPress={handleHint} disabled={hintUsed} />
+                <Button color={colors.buttonColor} title="SUBMIT GUESS" onPress={handleGuess} />
               </View>
             </View>
           )}
@@ -161,20 +162,28 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: "80%",
-    backgroundColor: "rgba(128, 128, 128, 0.8)",
+    backgroundColor: colors.cardBackground,
     padding: 20,
     borderRadius: 10,
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   message: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#005df2",
+    color: colors.messageColor,
     marginBottom: 10,
   },
   input: {
     height: 40,
-    borderColor: "#6145ff",
+    borderColor: colors.borderColor,
     borderBottomWidth: 3,
     marginBottom: 10,
     padding: 10,
@@ -186,13 +195,12 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 10,
-    flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
   },
   restartButtonContainer: {
     position: "absolute",
-    top: 100,
+    top: 200,
     right: 20,
   }
 });

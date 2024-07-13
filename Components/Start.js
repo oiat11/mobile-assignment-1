@@ -13,6 +13,7 @@ import Checkbox from "expo-checkbox";
 import { LinearGradient } from "expo-linear-gradient";
 import Confirm from "./Confirm";
 import Game from "./Game";
+import colors from "./colors";
 
 const Start = () => {
   const [name, setName] = useState("");
@@ -80,7 +81,7 @@ const Start = () => {
 
   if (screen === "Start") {
     return (
-      <LinearGradient colors={["#5ec4ff", "#b0c6d4"]} style={styles.gradient}>
+      <LinearGradient colors={[colors.gradientStart, colors.gradientEnd]} style={styles.gradient}>
         <View style={styles.container}>
           <Text style={styles.welcomeMessage}>Welcome</Text>
           <View style={styles.formContainer}>
@@ -167,21 +168,29 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     position: "absolute",
-    top: 80,
+    top: 150,
     textAlign: "center",
     width: "100%",
-    color: "#005df2",
+    color: colors.messageColor,
   },
   formContainer: {
     width: "80%",
     alignItems: "right",
-    backgroundColor: "rgba(128, 128, 128, 0.8)",
+    backgroundColor: colors.cardBackground,
     padding: 20,
     borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   input: {
     height: 40,
-    borderColor: "#6145ff",
+    borderColor: colors.borderColor,
     borderBottomWidth: 3,
     marginBottom: 10,
     padding: 10,
@@ -189,12 +198,12 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontWeight: "bold",
-    color: "#6145ff",
+    color: colors.borderColor,
     fontSize: 16,
     margin: 10,
   },
   checkBoxText: {
-    color: "#6145ff",
+    color: colors.borderColor,
   },
   errorText: {
     color: "red",
@@ -214,6 +223,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 5,
   },
+
 });
 
 export default Start;
