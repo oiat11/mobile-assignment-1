@@ -2,7 +2,7 @@ import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert, Keyboard,
 import React, { useState, useEffect } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import Result from './Result';
-
+import GameOver from './GameOver';
 
 const Game = () => {
   const [randomNumber, setRandomNumber] = useState(null);
@@ -12,6 +12,8 @@ const Game = () => {
   const [hintUsed, setHintUsed] = useState(false);
   const [hintRange, setHintRange] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [gameOverReason, setGameOverReason] = useState('');
 
   useEffect(() => {
     setRandomNumber(generateRandomNumber());
@@ -20,8 +22,8 @@ const Game = () => {
       setTimer((prevTimer) => {
         if (prevTimer <= 1) {
           clearInterval(interval);
-          Alert.alert('Game Over', 'Time is up!');
-          resetGame();
+          setGameOverReason('Time is up!');
+          setGameOver(true);
           return 0;
         }
         return prevTimer - 1;
@@ -50,7 +52,8 @@ const Game = () => {
       setAttempts((prevAttempts) => {
         const newAttempts = prevAttempts - 1;
         if (newAttempts <= 0) {
-          resetGame();
+          setGameOverReason('You have used all your attempts.');
+          setGameOver(true);
           return 0;
         } else {
           return newAttempts;
@@ -81,6 +84,8 @@ const Game = () => {
     setHintUsed(false);
     setHintRange(null);
     setShowResult(false);
+    setGameOver(false);
+    setGameOverReason('');
   }
 
   const handleGuessAgain = () => {
@@ -93,7 +98,9 @@ const Game = () => {
       <LinearGradient colors={["#5ec4ff", "#b0c6d4"]} style={styles.gradient}>
         <View style={styles.container}>
           <Button title="RESTART" onPress={resetGame} />
-          {showResult ? (
+          {gameOver ? (
+            <GameOver reason={gameOverReason} onReset={resetGame} />
+          ) : showResult ? (
             <Result
               guess={parseInt(guess, 10)}
               randomNumber={randomNumber}
@@ -164,6 +171,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 10,
+    flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
   },
