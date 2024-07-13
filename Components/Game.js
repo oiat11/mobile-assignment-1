@@ -109,7 +109,9 @@ const Game = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <LinearGradient colors={["#5ec4ff", "#b0c6d4"]} style={styles.gradient}>
         <View style={styles.container}>
-          <Button title="RESTART" onPress={resetGame} />
+        <View style={styles.restartButtonContainer}>
+            <Button title="RESTART" onPress={resetGame} />
+          </View>
           {gameOver ? (
             <GameOver reason={gameOverReason} onReset={resetGame} />
           ) : showResult ? (
@@ -188,6 +190,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "100%",
   },
+  restartButtonContainer: {
+    position: "absolute",
+    top: 100,
+    right: 20,
+  }
 });
 
 export default Game;
