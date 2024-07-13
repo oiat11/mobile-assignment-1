@@ -14,6 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Confirm from "./Confirm";
 import Game from "./Game";
 import colors from "./colors";
+import GradientBackground from "./GradientBackground";
 
 const Start = () => {
   const [name, setName] = useState("");
@@ -81,7 +82,7 @@ const Start = () => {
 
   if (screen === "Start") {
     return (
-      <LinearGradient colors={[colors.gradientStart, colors.gradientEnd]} style={styles.gradient}>
+      <GradientBackground>
         <View style={styles.container}>
           <Text style={styles.welcomeMessage}>Welcome</Text>
           <View style={styles.formContainer}>
@@ -140,7 +141,7 @@ const Start = () => {
             handleConfirm={handleConfirm}
           />
         </View>
-      </LinearGradient>
+        </GradientBackground>
     );
   }
 

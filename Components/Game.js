@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Result from './Result';
 import GameOver from './GameOver';
 import colors from './colors';
+import GradientBackground from './GradientBackground';
 
 const Game = () => {
   const [randomNumber, setRandomNumber] = useState(null);
@@ -108,7 +109,7 @@ const Game = () => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <LinearGradient colors={[colors.gradientStart, colors.gradientEnd]} style={styles.gradient}>
+     <GradientBackground>
         <View style={styles.container}>
         <View style={styles.restartButtonContainer}>
             <Button title="RESTART" onPress={resetGame} />
@@ -144,17 +145,12 @@ const Game = () => {
             </View>
           )}
         </View>
-      </LinearGradient>
+        </GradientBackground>
     </TouchableWithoutFeedback>
   )
 }
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  },
   container: {
     flex: 1,
     alignItems: "center",
