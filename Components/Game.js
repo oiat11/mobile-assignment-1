@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import Result from './Result';
 import GameOver from './GameOver';
@@ -14,24 +14,28 @@ const Game = () => {
   const [showResult, setShowResult] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [gameOverReason, setGameOverReason] = useState('');
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     setRandomNumber(generateRandomNumber());
+    startTimer();
 
-    const interval = setInterval(() => {
-      setTimer((prevTimer) => {
-        if (prevTimer <= 1) {
-          clearInterval(interval);
-          setGameOverReason('Time is up!');
-          setGameOver(true);
-          return 0;
-        }
-        return prevTimer - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
+    return () => clearInterval(intervalRef.current);
   }, []);
+
+  useEffect(() => {
+    if (timer === 0) {
+      setGameOverReason('You are out of time!');
+      setGameOver(true);
+      clearInterval(intervalRef.current);
+    }
+  }, [timer]);
+
+  const startTimer = () => {
+    intervalRef.current = setInterval(() => {
+      setTimer((prevTimer) => prevTimer - 1);
+    }, 1000);
+  };
 
   function generateRandomNumber() {
     const number = Math.floor(Math.random() * 100) + 1;
@@ -52,7 +56,7 @@ const Game = () => {
       setAttempts((prevAttempts) => {
         const newAttempts = prevAttempts - 1;
         if (newAttempts <= 0) {
-          setGameOverReason('You have used all your attempts.');
+          setGameOverReason('You are out of attempts.');
           setGameOver(true);
           return 0;
         } else {
@@ -77,6 +81,7 @@ const Game = () => {
   }
 
   const resetGame = () => {
+    clearInterval(intervalRef.current);
     setRandomNumber(generateRandomNumber());
     setGuess('');
     setAttempts(4);
@@ -86,11 +91,18 @@ const Game = () => {
     setShowResult(false);
     setGameOver(false);
     setGameOverReason('');
+    startTimer();
   }
 
   const handleGuessAgain = () => {
     setGuess('');
     setShowResult(false);
+  }
+
+  const handleEndGame = () => {
+    setGameOverReason('');
+    setGameOver(true);
+    clearInterval(intervalRef.current);
   }
 
   return (
@@ -107,6 +119,7 @@ const Game = () => {
               attempts={attempts}
               onReset={resetGame}
               onGuessAgain={handleGuessAgain}
+              onEndGame={handleEndGame}
             />
           ) : (
             <View style={styles.cardContainer}>

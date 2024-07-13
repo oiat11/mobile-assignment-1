@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, Image } from 'react-native';
 
-const Result = ({ guess, randomNumber, attempts, onReset, onGuessAgain }) => {
+const Result = ({ guess, randomNumber, attempts, onReset, onGuessAgain, onEndGame }) => {
   const isCorrect = guess === randomNumber;
 
   return (
@@ -21,7 +21,7 @@ const Result = ({ guess, randomNumber, attempts, onReset, onGuessAgain }) => {
           <Text style={styles.message}>You did not guess correct!</Text>
           <View style={styles.buttonContainer}>
             <Button title="Guess Again" onPress={onGuessAgain} />
-            <Button title="End Game" onPress={onReset} />
+            <Button title="End Game" onPress={onEndGame} />
           </View>
         </>
       )}
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 10,
+    flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
   },
